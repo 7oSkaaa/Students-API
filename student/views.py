@@ -1,51 +1,48 @@
-from django.shortcuts import render
 from django.http import JsonResponse
+from django.views import View
+from .models import Student
 import json
 
-# read the data from the file
-def read(file):
-    with open(file, 'r') as openfile:
-        return json.load(openfile, strict=False)
+class StudentView(View):
+    # GET all students
+    def get(self, request):
+        students = Student.objects.all()
+        if students:
+            return JsonResponse({'students': list(students.values())})
+        else:
+            return JsonResponse({'message': 'No students found!'})
     
+    # POST a new student
+    def post(self, request):
+        student = json.loads(request.body)
+        Student.objects.create(**student)
+        return JsonResponse({'message': 'Student created successfully!'})
+
     
-# write the data to the file
-def write(file, data):
-    with open(file, 'w') as openfile:
-        json.dump(data, openfile)
-
-
-# for get and post request
-def get_post(request):
-    file = 'student/db.json'
-    students = read(file)
-    if request.method == 'GET':
-        return JsonResponse(data=students, safe=False)
-    elif request.method == 'POST':
-        data = json.loads(request.body, strict=False)
-        students.append(data)
-        write(file, students)
-        return JsonResponse(data=students, safe=False)
-    else:
-        return JsonResponse({"message": "Method not allowed"}, status=405)
-
-
-# for put and delete request
-def put_delete(request, id):
-    file = 'student/db.json'
-    students = read(file)
-    if request.method == 'PUT':
-        for i in range(len(students)):
-            if students[i]['id'] == id:
-                students[i] = json.loads(request.body, strict=False)
-                write(file, students)
-                return JsonResponse(data=students, safe=False)
-        return JsonResponse({"message": "Student not found"}, status=404)
-    elif request.method == 'DELETE':
-        for i in range(len(students)):
-            if students[i]['id'] == id:
-                students.pop(i)
-                write(file, students)
-                return JsonResponse(data=students, safe=False)
-        return JsonResponse({"message": "Student not found"}, status=404)
-    else:
-        return JsonResponse({"message": "Method not allowed"}, status=405)
+class StudentViewId(View):
+    # GET a student by id
+    def get(self, request, *args, **kwargs):
+        student = Student.objects.get(id=kwargs['id'])
+        if student:
+            return JsonResponse({'student': student})
+        else:
+            return JsonResponse({'message': 'Student not found!'})
+    
+    # PUT a student by id
+    def put(self, request, *args, **kwargs):
+        new_student = json.loads(request.body)
+        old_student = Student.objects.filter(id=kwargs['id'])
+        if old_student:
+            old_student.update(**new_student)
+            return JsonResponse({'message': 'Student updated successfully!'})
+        else:
+            return JsonResponse({'message': 'Student not found!'})
+    
+    # DELETE a student by id
+    def delete(self, request, *args, **kwargs):
+        student = Student.objects.filter(id=kwargs['id'])
+        if student:
+            student.delete()
+            return JsonResponse({'message': 'Student deleted successfully!'})
+        else:
+            return JsonResponse({'message': 'Student not found!'})

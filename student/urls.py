@@ -2,6 +2,6 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('', get_post),
-    path('<int:id>/', put_delete),
+    path('', StudentView.as_view()),
+    path('<int:id>', StudentViewId.as_view()),
 ]

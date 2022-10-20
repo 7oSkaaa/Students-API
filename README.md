@@ -1,4 +1,3 @@
-
 # Students API
 
 It's a simple API to return `Students Data`
