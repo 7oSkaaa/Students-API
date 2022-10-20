@@ -40,6 +40,7 @@ There are 4 allowed requests:
 
 - Request Header
   - `localhost:8000/student`
+  - `localhost:8000/student/1`
 - Request Body
 
   - ```json
@@ -48,38 +49,43 @@ There are 4 allowed requests:
 
 ***Response***
 
-```json
-[
+- ```json
     {
-        "id": 1,
-        "name": "Ahmed Hossam",
-        "age": 21,
-        "birthdate": "2001-04-14",
-        "class_number": 1
-    },
+        "students": [
+            {
+                "id": 1,
+                "first_name": "Ahmed",
+                "last_name": "Hossam",
+                "email": "ahmed.7oskaa@gmail.com",
+                "age": 21,
+                "class_number": 1
+            },
+            {
+                "id": 3,
+                "first_name": "Wael",
+                "last_name": "Ahmed",
+                "email": "wael.ahmed99@gmail.com",
+                "age": 24,
+                "class_number": 5
+            }
+        ]
+    }
+    ```
+
+- ```json
     {
-        "id": 2,
-        "name": "Hashem Mohamed",
-        "age": 25,
-        "birthdate": "1997-02-18",
-        "class_number": 4
-    },
-    {
-        "id": 3,
-        "name": "Mohamed Salah",
-        "age": 25,
-        "birthdate": "1997-12-12",
-        "class_number": 2
-    },
-    {
-        "id": 4,
-        "name": "Wael Ahmed",
-        "age": 24,
-        "birthdate": "1999-05-21",
-        "class_number": 6
-    },
-]
-```
+        "student": [
+            {
+                "id": 1,
+                "first_name": "Ahmed",
+                "last_name": "Hossam",
+                "email": "ahmed.7oskaa@gmail.com",
+                "age": 21,
+                "class_number": 1
+            }
+        ]
+    }
+    ```
 
 ### POST
 
@@ -91,10 +97,11 @@ There are 4 allowed requests:
 
   - ```json
     {
-        "id": 5,
-        "name": "Mina Magdy",
+        "id": 2,
+        "first_name": "Mina",
+        "last_name": "Magdy",
+        "email": "minamagdy@gmail.com",
         "age": 20,
-        "birthdate": "2001-11-18",
         "class_number": 3
     }
     ```
@@ -102,43 +109,34 @@ There are 4 allowed requests:
 ***Response**
 
 ```json
-[
-    {
-        "id": 1,
-        "name": "Ahmed Hossam",
-        "age": 21,
-        "birthdate": "2001-04-14",
-        "class_number": 1
-    },
-    {
-        "id": 2,
-        "name": "Hashem Mohamed",
-        "age": 25,
-        "birthdate": "1997-02-18",
-        "class_number": 4
-    },
-    {
-        "id": 3,
-        "name": "Mohamed Salah",
-        "age": 25,
-        "birthdate": "1997-12-12",
-        "class_number": 2
-    },
-    {
-        "id": 4,
-        "name": "Wael Ahmed",
-        "age": 24,
-        "birthdate": "1999-05-21",
-        "class_number": 6
-    },
-    {
-        "id": 5,
-        "name": "Mina Magdy",
-        "age": 20,
-        "birthdate": "2001-11-18",
-        "class_number": 3
-    }
-]
+{
+    "students": [
+        {
+            "id": 1,
+            "first_name": "Ahmed",
+            "last_name": "Hossam",
+            "email": "ahmed.7oskaa@gmail.com",
+            "age": 21,
+            "class_number": 1
+        },
+        {
+            "id": 2,
+            "first_name": "Mina",
+            "last_name": "Magdy",
+            "email": "minamagdy@gmail.com",
+            "age": 20,
+            "class_number": 3
+        },
+        {
+            "id": 3,
+            "first_name": "Wael",
+            "last_name": "Ahmed",
+            "email": "wael.ahmed99@gmail.com",
+            "age": 24,
+            "class_number": 5
+        }
+    ]
+}
 ```
 
 ### PUT
@@ -152,53 +150,45 @@ There are 4 allowed requests:
   - ```json
     {
         "id": 3,
-        "name": "Mohamed Ibrahim",
-        "age": 22,
-        "birthdate": "2000-12-12",
-        "class_number": 4
+        "first_name": "Mohamed",
+        "last_name": "Ibrahim",
+        "email": "mo_Ibrahim@gmail.com",
+        "age": 20,
+        "class_number": 5
     }
     ```
 
 ***Response***
 
 ```json
-[
-    {
-        "id": 1,
-        "name": "Ahmed Hossam",
-        "age": 21,
-        "birthdate": "2001-04-14",
-        "class_number": 1
-    },
-    {
-        "id": 2,
-        "name": "Hashem Mohamed",
-        "age": 25,
-        "birthdate": "1997-02-18",
-        "class_number": 4
-    },
-    {
-        "id": 3,
-        "name": "Mohamed Ibrahim",
-        "age": 22,
-        "birthdate": "2000-12-12",
-        "class_number": 4
-    },
-    {
-        "id": 4,
-        "name": "Wael Ahmed",
-        "age": 24,
-        "birthdate": "1999-05-21",
-        "class_number": 6
-    },
-    {
-        "id": 5,
-        "name": "Mina Magdy",
-        "age": 20,
-        "birthdate": "2001-11-18",
-        "class_number": 3
-    }
-]
+{
+    "students": [
+        {
+            "id": 1,
+            "first_name": "Ahmed",
+            "last_name": "Hossam",
+            "email": "ahmed.7oskaa@gmail.com",
+            "age": 21,
+            "class_number": 1
+        },
+        {
+            "id": 2,
+            "first_name": "Mina",
+            "last_name": "Magdy",
+            "email": "minamagdy@gmail.com",
+            "age": 20,
+            "class_number": 3
+        },
+        {
+            "id": 3,
+            "first_name": "Mohamed",
+            "last_name": "Ibrahim",
+            "email": "mo_Ibrahim@gmail.com",
+            "age": 20,
+            "class_number": 5
+        }
+    ]
+}
 ```
 
 ### DELETE
@@ -216,36 +206,26 @@ There are 4 allowed requests:
 ***Response***
 
 ```json
-[
-    {
-        "id": 1,
-        "name": "Ahmed Hossam",
-        "age": 21,
-        "birthdate": "2001-04-14",
-        "class_number": 1
-    },
-    {
-        "id": 2,
-        "name": "Hashem Mohamed",
-        "age": 25,
-        "birthdate": "1997-02-18",
-        "class_number": 4
-    },
-    {
-        "id": 4,
-        "name": "Wael Ahmed",
-        "age": 24,
-        "birthdate": "1999-05-21",
-        "class_number": 6
-    },
-    {
-        "id": 5,
-        "name": "Mina Magdy",
-        "age": 20,
-        "birthdate": "2001-11-18",
-        "class_number": 3
-    }
-]
+{
+    "students": [
+        {
+            "id": 1,
+            "first_name": "Ahmed",
+            "last_name": "Hossam",
+            "email": "ahmed.7oskaa@gmail.com",
+            "age": 21,
+            "class_number": 1
+        },
+        {
+            "id": 2,
+            "first_name": "Mina",
+            "last_name": "Magdy",
+            "email": "minamagdy@gmail.com",
+            "age": 20,
+            "class_number": 3
+        }
+    ]
+}
 ```
 
 ## Contributing
