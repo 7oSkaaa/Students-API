@@ -1,6 +1,6 @@
 # Students API
 
-It's a simple API to return `Students Data`
+It's a simple API to deal with `Students Data`
 
 ## Installation
 
