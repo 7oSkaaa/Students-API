@@ -1,6 +1,4 @@
-from django import db
 from django.db import models
-from numpy import char
 
 # Create your models here.
 
@@ -13,7 +11,7 @@ class Student(models.Model):
     class_number = models.IntegerField()
     
     def __str__(self):
-        return self.name
+        return f'{self.first_name} {self.last_name}'
     
     class meta:
         ordering = ['name']

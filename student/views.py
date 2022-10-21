@@ -1,7 +1,9 @@
 from django.http import JsonResponse
+from django.core import serializers
 from django.views import View
 from .models import Student
 import json
+
 
 class StudentView(View):
     # GET all students
@@ -22,9 +24,9 @@ class StudentView(View):
 class StudentViewId(View):
     # GET a student by id
     def get(self, request, *args, **kwargs):
-        student = Student.objects.get(id=kwargs['id'])
+        student = serializers.serialize('json', [Student.objects.get(id=kwargs['id'])])
         if student:
-            return JsonResponse({'student': student})
+            return JsonResponse({'student': list(json.loads(student))})
         else:
             return JsonResponse({'message': 'Student not found!'})
     
