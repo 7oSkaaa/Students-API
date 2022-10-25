@@ -42,14 +42,11 @@ class StudentViewId(View):
     
     # GET a student by id
     def get(self, request, *args, **kwargs):
-        try:
-            student = Student.objects.get(id=kwargs['id'])
-            if student:
-                return JsonResponse({'Student': toJson(student)}, safe=False)
-            else:
-                return JsonResponse({'message': 'Student not found!'}, status=422)
-        except:
-            return JsonResponse({'message': 'Format error!'}, status=422)
+        student = Student.objects.get(id=kwargs['id'])
+        if student:
+            return JsonResponse({'Student': toJson(student)}, safe=False)
+        else:
+            return JsonResponse({'message': 'Student not found!'}, status=422)
             
     # PUT a student by id
     def put(self, request, *args, **kwargs):

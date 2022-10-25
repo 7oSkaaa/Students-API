@@ -24,17 +24,19 @@ class ParentView(View):
         if parents:
             return JsonResponse({'Parents': list(parents.values())}, safe=False)
         else:
-            return JsonResponse({'message': 'No parents found!'}, status=404)
+            return JsonResponse({'message': 'No parents found!'}, status=422)
             
     # POST a new parent
     def post(self, request):
-        form = ParentForm(data=json.loads(request.body))
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'message': 'Parent created successfully!'})
-        else:
-            return JsonResponse({'message': 'Parent not created!'}, status=422)
-    
+        try:
+            form = ParentForm(data=json.loads(request.body))
+            if form.is_valid():
+                form.save()
+                return JsonResponse({'message': 'Parent created successfully!'})
+            else:
+                return JsonResponse({'message': 'Parent not created!'}, status=422)
+        except:
+            return JsonResponse({'message': 'Format error!'}, status=422)       
     
 class ParentViewId(View):
     
@@ -48,13 +50,16 @@ class ParentViewId(View):
     
     # PUT a parent by id
     def put(self, request, *args, **kwargs):
-        form = ParentForm(data=json.loads(request.body), instance=Parent.objects.get(id=kwargs['id']))
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'message': 'Parent updated successfully!'})
-        else:
-            return JsonResponse({'message': 'Parent not updated!'}, status=422)
-    
+        try:
+            form = ParentForm(data=json.loads(request.body), instance=Parent.objects.get(id=kwargs['id']))
+            if form.is_valid():
+                form.save()
+                return JsonResponse({'message': 'Parent updated successfully!'})
+            else:
+                return JsonResponse({'message': 'Parent not updated!'}, status=422)
+        except:
+            return JsonResponse({'message': 'Format error!'}, status=422)
+
     # DELETE a parent by id
     def delete(self, request, *args, **kwargs):
         Parent = Parent.objects.filter(id=kwargs['id'])
@@ -62,4 +67,4 @@ class ParentViewId(View):
             Parent.delete()
             return JsonResponse({'message': 'Parent deleted successfully!'})
         else:
-            return JsonResponse({'message': 'Parent not found!'}, status=404)
+            return JsonResponse({'message': 'Parent not found!'}, status=422)
