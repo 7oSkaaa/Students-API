@@ -20,12 +20,12 @@ class StudentView(View):
 
    # GET all students
     def get(self, request):
-        students = Student.objects.all()
-        if students:
-            return JsonResponse({'students': list(students.values())}, safe=False)
-        else:
+        try:
+            form = StudentForm(Student.objects.all())
+            return JsonResponse(toJson(form), safe=False)
+        except:
             return JsonResponse({'message': 'No students found!'}, status=422)
-            
+    
     # POST a new student
     def post(self, request):
         try:
@@ -42,10 +42,10 @@ class StudentViewId(View):
     
     # GET a student by id
     def get(self, request, *args, **kwargs):
-        student = Student.objects.get(id=kwargs['id'])
-        if student:
-            return JsonResponse({'Student': toJson(student)}, safe=False)
-        else:
+        try:
+            form = StudentForm(Student.objects.get(id=kwargs['id']))
+            return JsonResponse({'student': toJson(form.data)})
+        except:
             return JsonResponse({'message': 'Student not found!'}, status=422)
             
     # PUT a student by id

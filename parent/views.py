@@ -18,13 +18,13 @@ def toJson(Subject):
 
 class ParentView(View):
 
-   # GET all parents
+    # GET all parents
     def get(self, request):
-        parents = Parent.objects.all()
-        if parents:
-            return JsonResponse({'Parents': list(parents.values())}, safe=False)
-        else:
-            return JsonResponse({'message': 'No parents found!'}, status=422)
+        try:
+            form = ParentForm(Parent.objects.all())
+            return JsonResponse(toJson(form), safe=False)
+        except:
+            return JsonResponse({'message': 'No students found!'}, status=422)
             
     # POST a new parent
     def post(self, request):
@@ -42,11 +42,11 @@ class ParentViewId(View):
     
     # GET a parent by id
     def get(self, request, *args, **kwargs):
-        Parent = Parent.objects.get(id=kwargs['id'])
-        if Parent:
-            return JsonResponse({'Parent': toJson(Parent)}, safe=False)
-        else:
-            return JsonResponse({'message': 'Parent not found!'}, status=404)
+        try:
+            form = ParentForm(Parent.objects.get(id=kwargs['id']))
+            return JsonResponse({'student': toJson(form.data)})
+        except:
+            return JsonResponse({'message': 'Student not found!'}, status=422)
     
     # PUT a parent by id
     def put(self, request, *args, **kwargs):

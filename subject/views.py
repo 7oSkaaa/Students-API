@@ -20,11 +20,11 @@ class SubjectView(View):
 
    # GET all subjects
     def get(self, request):
-        subjects = Subject.objects.all()
-        if subjects:
-            return JsonResponse({'subjects': list(subjects.values())}, safe=False)
-        else:
-            return JsonResponse({'message': 'No subjects found!'}, status=422)
+        try:
+            form = SubjectForm(Subject.objects.all())
+            return JsonResponse(toJson(form), safe=False)
+        except:
+            return JsonResponse({'message': 'No students found!'}, status=422)
             
     # POST a new Subject
     def post(self, request):
@@ -42,11 +42,11 @@ class SubjectViewId(View):
     
     # GET a Subject by id
     def get(self, request, *args, **kwargs):
-        Subject = Subject.objects.get(id=kwargs['id'])
-        if Subject:
-            return JsonResponse({'Subject': toJson(Subject)}, safe=False)
-        else:
-            return JsonResponse({'message': 'Subject not found!'}, status=422)
+        try:
+            form = SubjectForm(Subject.objects.get(id=kwargs['id']))
+            return JsonResponse({'student': toJson(form.data)})
+        except:
+            return JsonResponse({'message': 'Student not found!'}, status=422)
     
     # PUT a Subject by id
     def put(self, request, *args, **kwargs):
