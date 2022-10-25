@@ -24,17 +24,19 @@ class SubjectView(View):
         if subjects:
             return JsonResponse({'subjects': list(subjects.values())}, safe=False)
         else:
-            return JsonResponse({'message': 'No subjects found!'}, status=404)
+            return JsonResponse({'message': 'No subjects found!'}, status=422)
             
     # POST a new Subject
     def post(self, request):
-        form = SubjectForm(data=json.loads(request.body))
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'message': 'Subject created successfully!'})
-        else:
-            return JsonResponse({'message': 'Subject not created!'}, status=422)
-    
+        try:
+            form = SubjectForm(data=json.loads(request.body))
+            if form.is_valid():
+                form.save()
+                return JsonResponse({'message': 'Subject created successfully!'})
+            else:
+                return JsonResponse({'message': 'Subject not created!'}, status=422)
+        except:
+            return JsonResponse({'message': 'Format error!'}, status=422)
     
 class SubjectViewId(View):
     
@@ -44,16 +46,19 @@ class SubjectViewId(View):
         if Subject:
             return JsonResponse({'Subject': toJson(Subject)}, safe=False)
         else:
-            return JsonResponse({'message': 'Subject not found!'}, status=404)
+            return JsonResponse({'message': 'Subject not found!'}, status=422)
     
     # PUT a Subject by id
     def put(self, request, *args, **kwargs):
-        form = SubjectForm(data=json.loads(request.body), instance=Subject.objects.get(id=kwargs['id']))
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'message': 'Subject updated successfully!'})
-        else:
-            return JsonResponse({'message': 'Subject not updated!'}, status=422)
+        try:
+            form = SubjectForm(data=json.loads(request.body), instance=Subject.objects.get(id=kwargs['id']))
+            if form.is_valid():
+                form.save()
+                return JsonResponse({'message': 'Subject updated successfully!'})
+            else:
+                return JsonResponse({'message': 'Subject not updated!'}, status=422)
+        except:
+            return JsonResponse({'message': 'Format error!'}, status=422)
     
     # DELETE a Subject by id
     def delete(self, request, *args, **kwargs):
