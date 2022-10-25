@@ -9,6 +9,7 @@ packages = [{include = "sudents_api"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 django = "^4.1.2"
+dotenv = "^0.0.5"
 
 
 [build-system]
