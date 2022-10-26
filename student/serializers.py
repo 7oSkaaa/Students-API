@@ -15,13 +15,13 @@ def validate_mark(value):
         raise ValidationError('Mark must be greater than 50')
 
 
-class ParentSerializer(serializers.ModelSerializer):
+class ParentSerializerInStudent(serializers.ModelSerializer):
         
     class Meta:
         model = Parent
         fields = ['name']
 
-class SubjectSerializerList(serializers.ModelSerializer):
+class SubjectSerializerListInStudent(serializers.ModelSerializer):
     
     class Meta:
         model = Subject
@@ -31,8 +31,8 @@ class StudentSerializer(serializers.ModelSerializer):
     
     price = serializers.IntegerField(validators=[validate_mark])
     age = serializers.IntegerField(validators=[validate_age])
-    parent = ParentSerializer()
-    subjects = SubjectSerializerList(many=True)
+    parent = ParentSerializerInStudent()
+    subjects = SubjectSerializerListInStudent(many=True)
     
     class Meta:
         model = Student
