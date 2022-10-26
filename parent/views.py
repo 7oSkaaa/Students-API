@@ -1,70 +1,32 @@
-from django.http import JsonResponse
-from django.core.serializers.json import DjangoJSONEncoder
-from django.db.models import Model
-from django.forms import model_to_dict
-from django.views import View
+from rest_framework import mixins
+from rest_framework import generics
 from .models import Parent
-from .forms import ParentForm
-import json
-
-class ExtendedEncoder(DjangoJSONEncoder):
-    def default(self, o):
-        if isinstance(o, Model):
-            return model_to_dict(o)
-        return super().default(o)
-
-def toJson(Subject):
-    return json.loads(json.dumps(Subject, cls=ExtendedEncoder))
-
-class ParentView(View):
-
+from .serializers import ParentSerializer
+class ParentView(generics.GenericAPIView, mixins.CreateModelMixin, mixins.ListModelMixin):
+    
+    queryset = Parent.objects.all()
+    serializer_class = ParentSerializer
+    
     # GET all parents
     def get(self, request):
-        try:
-            form = ParentForm(Parent.objects.all())
-            return JsonResponse(toJson(form), safe=False)
-        except:
-            return JsonResponse({'message': 'No students found!'}, status=422)
-            
+        return self.list(request)                
     # POST a new parent
     def post(self, request):
-        try:
-            form = ParentForm(data=json.loads(request.body))
-            if form.is_valid():
-                form.save()
-                return JsonResponse({'message': 'Parent created successfully!'})
-            else:
-                return JsonResponse({'message': 'Parent not created!'}, status=422)
-        except:
-            return JsonResponse({'message': 'Format error!'}, status=422)       
+        return self.create(request)
+
+class ParentDetailView(generics.GenericAPIView, mixins.RetrieveModelMixin, mixins.DestroyModelMixin, mixins.UpdateModelMixin):
     
-class ParentViewId(View):
+    queryset = Parent.objects.all()
+    serializer_class = ParentSerializer
     
     # GET a parent by id
     def get(self, request, *args, **kwargs):
-        try:
-            form = ParentForm(Parent.objects.get(id=kwargs['id']))
-            return JsonResponse({'student': toJson(form.data)})
-        except:
-            return JsonResponse({'message': 'Student not found!'}, status=422)
-    
+        return self.retrieve(request, *args, **kwargs)
+
     # PUT a parent by id
     def put(self, request, *args, **kwargs):
-        try:
-            form = ParentForm(data=json.loads(request.body), instance=Parent.objects.get(id=kwargs['id']))
-            if form.is_valid():
-                form.save()
-                return JsonResponse({'message': 'Parent updated successfully!'})
-            else:
-                return JsonResponse({'message': 'Parent not updated!'}, status=422)
-        except:
-            return JsonResponse({'message': 'Format error!'}, status=422)
-
+        return self.update(request, *args, **kwargs)
+    
     # DELETE a parent by id
     def delete(self, request, *args, **kwargs):
-        Parent = Parent.objects.filter(id=kwargs['id'])
-        if Parent:
-            Parent.delete()
-            return JsonResponse({'message': 'Parent deleted successfully!'})
-        else:
-            return JsonResponse({'message': 'Parent not found!'}, status=422)
+        return self.destroy(request, *args, **kwargs)

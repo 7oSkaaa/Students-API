@@ -6,10 +6,9 @@ from django.core.validators import RegexValidator
 validate_name = RegexValidator(regex='^[A-Z][a-z]*$', message='Name must start with a capital letter and contain only letters')
 
 class Student(models.Model):
-    id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=100, validators=[validate_name])
     last_name = models.CharField(max_length=100, validators=[validate_name])
-    parent = models.ForeignKey(Parent, on_delete=models.CASCADE, related_name = 'students', null=True)
+    parent = models.ForeignKey(Parent, on_delete=models.CASCADE, related_name = 'students')
     subjects = models.ManyToManyField(Subject, related_name='students')
     mark = models.IntegerField()
     age = models.IntegerField()

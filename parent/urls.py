@@ -3,5 +3,5 @@ from .views import *
 
 urlpatterns = [
     path('', ParentView.as_view()),
-    path('<int:id>', ParentViewId.as_view()),
+    path('<int:pk>', ParentDetailView.as_view()),
 ]
