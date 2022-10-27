@@ -9,7 +9,7 @@ class StudentSerializerListInParent(serializers.ModelSerializer):
 
 class ParentSerializer(serializers.ModelSerializer):
     
-    students = StudentSerializerListInParent(many=True, read_only=True)
+    students = StudentSerializerListInParent(many=True, required=False, read_only = True)
     
     class Meta:
         model = Parent
