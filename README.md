@@ -25,7 +25,7 @@ python manage.py runserver
 
 ## Usage/Examples
 
-There are 4 allowed requests:
+***There are 4 allowed requests:***
 
 - GET
 - POST
@@ -34,199 +34,29 @@ There are 4 allowed requests:
 
 ---
 
-### GET
+## Details
 
-***Request***
+***There are 3 apps in the project:***
 
-- Request Header
-  - `localhost:8000/student`
-  - `localhost:8000/student/1`
-- Request Body
+- student
+- parent
+- subject
 
-  - ```json
-    {}
-    ```
+***You can use the following endpoints:***
 
-***Response***
+- `swagger/` - for API documentation
+- `admin/` - for admin dashboard
+- `/student/` - for `GET` and `POST` requests
+- `/student/<int>` - for `GET`, `PUT` and `DELETE` requests
+- `/parent/` - for `GET` and `POST` requests
+- `/parent/<int>` - for `GET`, `PUT` and `DELETE` requests
+- `/subject/` - for `GET` and `POST` requests
+- `/subject/<int>` - for `GET`, `PUT` and `DELETE` requests
 
-- ```json
-    {
-        "students": [
-            {
-                "id": 1,
-                "first_name": "Ahmed",
-                "last_name": "Hossam",
-                "email": "ahmed.7oskaa@gmail.com",
-                "age": 21,
-                "class_number": 1
-            },
-            {
-                "id": 3,
-                "first_name": "Wael",
-                "last_name": "Ahmed",
-                "email": "wael.ahmed99@gmail.com",
-                "age": 24,
-                "class_number": 5
-            }
-        ]
-    }
-    ```
+***There are some relations between the apps:***
 
-- ```json
-    {
-        "student": [
-            {
-                "id": 1,
-                "first_name": "Ahmed",
-                "last_name": "Hossam",
-                "email": "ahmed.7oskaa@gmail.com",
-                "age": 21,
-                "class_number": 1
-            }
-        ]
-    }
-    ```
-
-### POST
-
-***Request***
-
-- Request Header
-  - ```localhost:8000/student```
-- Request Body
-
-  - ```json
-    {
-        "id": 2,
-        "first_name": "Mina",
-        "last_name": "Magdy",
-        "email": "minamagdy@gmail.com",
-        "age": 20,
-        "class_number": 3
-    }
-    ```
-
-***Response**
-
-```json
-{
-    "students": [
-        {
-            "id": 1,
-            "first_name": "Ahmed",
-            "last_name": "Hossam",
-            "email": "ahmed.7oskaa@gmail.com",
-            "age": 21,
-            "class_number": 1
-        },
-        {
-            "id": 2,
-            "first_name": "Mina",
-            "last_name": "Magdy",
-            "email": "minamagdy@gmail.com",
-            "age": 20,
-            "class_number": 3
-        },
-        {
-            "id": 3,
-            "first_name": "Wael",
-            "last_name": "Ahmed",
-            "email": "wael.ahmed99@gmail.com",
-            "age": 24,
-            "class_number": 5
-        }
-    ]
-}
-```
-
-### PUT
-
-***Request***
-
-- Request Header
-  - ```localhost:8000/student/3/```
-- Request Body
-
-  - ```json
-    {
-        "id": 3,
-        "first_name": "Mohamed",
-        "last_name": "Ibrahim",
-        "email": "mo_Ibrahim@gmail.com",
-        "age": 20,
-        "class_number": 5
-    }
-    ```
-
-***Response***
-
-```json
-{
-    "students": [
-        {
-            "id": 1,
-            "first_name": "Ahmed",
-            "last_name": "Hossam",
-            "email": "ahmed.7oskaa@gmail.com",
-            "age": 21,
-            "class_number": 1
-        },
-        {
-            "id": 2,
-            "first_name": "Mina",
-            "last_name": "Magdy",
-            "email": "minamagdy@gmail.com",
-            "age": 20,
-            "class_number": 3
-        },
-        {
-            "id": 3,
-            "first_name": "Mohamed",
-            "last_name": "Ibrahim",
-            "email": "mo_Ibrahim@gmail.com",
-            "age": 20,
-            "class_number": 5
-        }
-    ]
-}
-```
-
-### DELETE
-
-***Request***
-
-- Request Header
-  - ```localhost:8000/student/3/```
-- Request Body
-
-  - ```json
-    {}
-    ```
-
-***Response***
-
-```json
-{
-    "students": [
-        {
-            "id": 1,
-            "first_name": "Ahmed",
-            "last_name": "Hossam",
-            "email": "ahmed.7oskaa@gmail.com",
-            "age": 21,
-            "class_number": 1
-        },
-        {
-            "id": 2,
-            "first_name": "Mina",
-            "last_name": "Magdy",
-            "email": "minamagdy@gmail.com",
-            "age": 20,
-            "class_number": 3
-        }
-    ]
-}
-```
+- `Student` has `ManyToMany` relation with `Subject`
+- `Student` has `OneToOne` relation with `Parent`
 
 ## Contributing
 
