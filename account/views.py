@@ -21,7 +21,7 @@ class SignIn(generics.GenericAPIView, mixins.UpdateModelMixin):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
     
-    def put(self, request):
+    def post(self, request):
         try:
             # get request data
             [username, password, parent_id] = [request.data['username'], request.data['password'], request.data['parent']] 
