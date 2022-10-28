@@ -1,7 +1,11 @@
+from matplotlib import widgets
 from rest_framework import serializers
 from .models import Account
 class AccountSerializer(serializers.ModelSerializer):
     
+    username = serializers.CharField(style={'input_type': 'text', 'placeholder': 'Username'})
+    password = serializers.CharField(style={'input_type': 'password', 'placeholder': 'Password'})
+
     class Meta:
         model = Account
-        fields = '__all__'
+        fields = ['username', 'password', 'parent']

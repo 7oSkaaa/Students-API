@@ -9,7 +9,9 @@ class StudentSerializerListInParent(serializers.ModelSerializer):
 
 class ParentSerializer(serializers.ModelSerializer):
     
+    name = serializers.CharField(style={'input_type': 'text', 'placeholder': 'Name'})
     students = StudentSerializerListInParent(many=True, required=False, read_only = True)
+    
     class Meta:
         model = Parent
         fields = '__all__'

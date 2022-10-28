@@ -33,5 +33,5 @@ class StudentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Student
-        fields = '__all__'
+        fields = ['first_name', 'last_name', 'age', 'mark', 'subjects', 'parent']
         validators = [validate_parent]
