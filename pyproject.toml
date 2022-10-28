@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "sudents-api"
+name = "students-api"
 version = "0.1.0"
 description = ""
 authors = ["Ahmed Hossam"]
 readme = "README.md"
-packages = [{include = "sudents_api"}]
+packages = [{include = "students_api"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"

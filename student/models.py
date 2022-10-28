@@ -1,5 +1,4 @@
 from django.db import models
-from numpy import require
 from parent.models import Parent
 from django.core.validators import RegexValidator
 
