@@ -17,6 +17,8 @@ class Register(generics.GenericAPIView, mixins.CreateModelMixin):
     @swagger_auto_schema(operation_summary='Register a new user')
     def post(self, request):
         return self.create(request)
+    
+
 class SignIn(generics.GenericAPIView, mixins.UpdateModelMixin):
     
     queryset = Account.objects.all()
