@@ -1,11 +1,11 @@
 from rest_framework import mixins, generics, status
 from rest_framework.response import Response
-
 from parent.models import Parent
 from .serializers import AccountSerializer
 from .models import Account
 from tokens.models import Tokens
 from datetime import datetime
+from school.settings import SECRET_KEY
 import jwt
 
 class Register(generics.GenericAPIView, mixins.CreateModelMixin):
@@ -30,7 +30,7 @@ class SignIn(generics.GenericAPIView, mixins.UpdateModelMixin):
             account = Account.objects.get(username=username, password=password, parent = Parent.objects.get(id=parent_id))
             
             # generate token
-            token = jwt.encode({'username': username, 'password': password, 'timestamp': datetime.timestamp(datetime.now())}, 'secret', algorithm='HS256')
+            token = jwt.encode({'username': username, 'password': password, 'timestamp': datetime.timestamp(datetime.now())}, SECRET_KEY, algorithm='HS256')
             
             # generate token object
             newToken = {
@@ -43,4 +43,6 @@ class SignIn(generics.GenericAPIView, mixins.UpdateModelMixin):
             
             return Response({'token': token}, status=status.HTTP_200_OK)
         except Account.DoesNotExist:
-            return Response({'message': 'Parent not registered!'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'message': 'Username or password wrong!'}, status=status.HTTP_404_NOT_FOUND)
+        except:
+            return Response({'message': 'Parent is registered with another account!'}, status=status.HTTP_400_BAD_REQUEST)
