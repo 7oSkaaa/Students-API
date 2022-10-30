@@ -6,8 +6,8 @@ from .models import Account
 from tokens.models import Tokens
 from datetime import datetime
 from school.settings import SECRET_KEY
-import jwt
 from drf_yasg.utils import swagger_auto_schema
+import jwt
 
 class Register(generics.GenericAPIView, mixins.CreateModelMixin):
     

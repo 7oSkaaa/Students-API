@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Parent
 from student.models import Student
+from .models import Parent
 
 class StudentSerializerListInParent(serializers.ModelSerializer):
     class Meta:

@@ -1,5 +1,3 @@
-from enum import unique
-from django import db
 from django.db import models
 from parent.models import Parent
 

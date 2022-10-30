@@ -1,8 +1,7 @@
 from rest_framework import permissions
-from sympy import false
+from parent.models import Parent
 from .models import Parent
 from school.settings import SECRET_KEY
-from parent.models import Parent
 import jwt
 
 class ParentPermissions(permissions.BasePermission):

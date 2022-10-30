@@ -1,9 +1,8 @@
-from rest_framework import mixins
-from rest_framework import generics
-from .models import Parent
+from rest_framework import mixins, generics
 from .serializers import ParentSerializer
 from .middlewares import Authenticate
 from .permissions import ParentPermissions, ParentDetailPermissions
+from .models import Parent
 class ParentView(generics.GenericAPIView, mixins.CreateModelMixin, mixins.ListModelMixin):
     
     queryset = Parent.objects.all()
