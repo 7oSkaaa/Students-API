@@ -20,6 +20,18 @@ cd Students-API
 # start the project
 poetry shell
 poetry install
+```
+
+## migrate the database
+
+```shell
+python manage.py makemigrations
+python manage.py migrate
+```
+
+## Run the project
+
+```shell
 python manage.py runserver
 ```
 
@@ -41,6 +53,9 @@ python manage.py runserver
 - student
 - parent
 - subject
+- token
+- account
+- swagger
 
 ***You can use the following endpoints:***
 
@@ -48,15 +63,19 @@ python manage.py runserver
 - `admin/` - for admin dashboard
 - `/student/` - for `GET` and `POST` requests
 - `/student/<int>` - for `GET`, `PUT` and `DELETE` requests
-- `/parent/` - for `GET` and `POST` requests
-- `/parent/<int>` - for `GET`, `PUT` and `DELETE` requests
+- `/parent/` - for `GET` and `POST` requests (you must be logged in to use this endpoint and deal with only your data)
+- `/parent/<int>` - for `GET`, `PUT` and `DELETE` requests (you must be logged in to use this endpoint and deal with only your data)
 - `/subject/` - for `GET` and `POST` requests
 - `/subject/<int>` - for `GET`, `PUT` and `DELETE` requests
+- `/account/register/` - for `POST` requests (register new user not exist in database)
+- `/account/login/` - for `POST` requests (login user exist in database and get token)
 
 ***There are some relations between the apps:***
 
 - `Student` has `ManyToMany` relation with `Subject`
 - `Student` has `OneToOne` relation with `Parent`
+- `Parent` has `OneToOne` relation with `account`
+- `Parent` has `oneToMany` relation with `token`
 
 ## Contributing
 
