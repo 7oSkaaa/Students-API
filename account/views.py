@@ -7,20 +7,28 @@ from tokens.models import Tokens
 from datetime import datetime
 from school.settings import SECRET_KEY
 import jwt
+from drf_yasg.utils import swagger_auto_schema
 
 class Register(generics.GenericAPIView, mixins.CreateModelMixin):
     
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
     
+    @swagger_auto_schema(operation_summary='Register a new user')
     def post(self, request):
         return self.create(request)
-
 class SignIn(generics.GenericAPIView, mixins.UpdateModelMixin):
     
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
     
+    @swagger_auto_schema(operation_summary='Sign in with existing user', operation_description=
+        """
+            - You must be registered to sign in
+            - You will get a token after signing in
+            - You must use the token to access the other endpoints
+        """
+    )
     def post(self, request):
         try:
             # get request data
