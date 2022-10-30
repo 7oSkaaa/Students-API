@@ -1,5 +1,4 @@
-from rest_framework import authentication
-from rest_framework import exceptions
+from rest_framework import authentication, exceptions
 from tokens.models import Tokens
 
 
@@ -10,4 +9,3 @@ class Authenticate(authentication.BaseAuthentication):
             if token_object.token == sent_token:
                 return (True, None)
         raise exceptions.AuthenticationFailed('You are not authenticated!')
-    

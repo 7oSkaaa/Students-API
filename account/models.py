@@ -1,3 +1,4 @@
+from enum import unique
 from django import db
 from django.db import models
 from parent.models import Parent
@@ -13,3 +14,4 @@ class Account(models.Model):
     
     class Meta:
         db_table = 'account'
+        unique_together = [['username', 'password']]

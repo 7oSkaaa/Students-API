@@ -3,6 +3,7 @@ from rest_framework import generics
 from .models import Parent
 from .serializers import ParentSerializer
 from .middlewares import Authenticate
+from .permissions import ParentPermissions, ParentDetailPermissions
 class ParentView(generics.GenericAPIView, mixins.CreateModelMixin, mixins.ListModelMixin):
     
     queryset = Parent.objects.all()
@@ -13,6 +14,7 @@ class ParentView(generics.GenericAPIView, mixins.CreateModelMixin, mixins.ListMo
         return self.create(request)
     
     authentication_classes = [Authenticate]
+    permission_classes = [ParentPermissions]
     
     # GET all parents
     def get(self, request):
@@ -24,6 +26,8 @@ class ParentDetailView(generics.GenericAPIView, mixins.RetrieveModelMixin, mixin
     queryset = Parent.objects.all()
     serializer_class = ParentSerializer
     authentication_classes = [Authenticate]
+    permission_classes = [ParentDetailPermissions]
+    
     # GET a parent by id
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
