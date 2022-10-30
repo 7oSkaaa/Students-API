@@ -1,0 +1,24 @@
+- model: parent.parent
+  pk: 1
+  fields: 
+    name: Ahmed
+- model: parent.parent
+  pk: 2
+  fields: 
+    name: Ashour
+- model: parent.parent
+  pk: 3
+  fields: 
+    name: Ezz
+- model: account.account
+  pk: 1
+  fields:
+    username: 7oSkaa
+    password: 7oSkaa2001
+    parent: 1
+- model: account.account
+  pk: 2
+  fields:
+    username: wael_ashour
+    password: 19992000
+    parent: 2
