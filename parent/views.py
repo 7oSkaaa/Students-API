@@ -3,6 +3,8 @@ from .serializers import ParentSerializer
 from .middlewares import Authenticate
 from .permissions import ParentPermissions, ParentDetailPermissions
 from .models import Parent
+from drf_yasg.utils import swagger_auto_schema
+
 class ParentView(generics.GenericAPIView, mixins.CreateModelMixin, mixins.ListModelMixin):
     
     queryset = Parent.objects.all()
@@ -16,6 +18,11 @@ class ParentView(generics.GenericAPIView, mixins.CreateModelMixin, mixins.ListMo
     permission_classes = [ParentPermissions]
     
     # GET all parents
+    @swagger_auto_schema(operation_description=
+        """
+            You must sent a token in the headers to access this endpoint
+        """
+    )
     def get(self, request):
         return self.list(request)
                     
@@ -28,13 +35,28 @@ class ParentDetailView(generics.GenericAPIView, mixins.RetrieveModelMixin, mixin
     permission_classes = [ParentDetailPermissions]
     
     # GET a parent by id
+    @swagger_auto_schema(operation_description=
+        """
+            You must sent a token in the headers to access this endpoint
+        """
+    )
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
     # PUT a parent by id
+    @swagger_auto_schema(operation_description=
+        """
+            You must sent a token in the headers to access this endpoint
+        """
+    )
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
     
     # DELETE a parent by id
+    @swagger_auto_schema(operation_description=
+        """
+            You must sent a token in the headers to access this endpoint
+        """
+    )
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
