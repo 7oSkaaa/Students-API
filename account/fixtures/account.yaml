@@ -1,15 +1,3 @@
-- model: parent.parent
-  pk: 1
-  fields: 
-    name: Ahmed
-- model: parent.parent
-  pk: 2
-  fields: 
-    name: Ashour
-- model: parent.parent
-  pk: 3
-  fields: 
-    name: Ezz
 - model: account.account
   pk: 1
   fields:

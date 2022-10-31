@@ -3,7 +3,7 @@ from django.test import TestCase
 
 class AccountViewTest(TestCase):
     
-    fixtures = ['data.yaml']
+    fixtures = ['parent.yaml', 'account.yaml']
     
     def setUp(self):
         self.endpoint = '/account'
