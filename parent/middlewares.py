@@ -4,8 +4,14 @@ from tokens.models import Tokens
 
 class Authenticate(authentication.BaseAuthentication):
     def authenticate(self, request):
+        # post request isn't necessary to authenticate
+        if request.method == 'POST':
+            return (True, None)
+        # get the token from the headers
         sent_token = request.headers.get('Jwt')
-        for token_object in Tokens.objects.all():
-            if token_object.token == sent_token:
-                return (True, None)
-        raise exceptions.AuthenticationFailed('You are not authenticated!')
+        try:
+            # get the token from the database
+            token = Tokens.objects.get(token=sent_token)
+            return (True, None)
+        except Tokens.DoesNotExist:
+            raise exceptions.AuthenticationFailed('You are not authenticated!')

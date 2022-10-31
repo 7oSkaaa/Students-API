@@ -9,13 +9,13 @@ class ParentView(generics.GenericAPIView, mixins.CreateModelMixin, mixins.ListMo
     
     queryset = Parent.objects.all()
     serializer_class = ParentSerializer
+    authentication_classes = [Authenticate]
+    permission_classes = [ParentPermissions]
     
     # POST a new parent
     def post(self, request):
         return self.create(request)
     
-    authentication_classes = [Authenticate]
-    permission_classes = [ParentPermissions]
     
     # GET all parents
     @swagger_auto_schema(operation_description=
